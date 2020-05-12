@@ -30,9 +30,16 @@ class Wysiwyg extends Field_Base {
 		$form->add_render_attribute( 'textarea' . $item_index, 'class', 'elementor-tinymce' );
 
 		echo '<textarea ' . $form->get_render_attribute_string( 'input' . $item_index ) . '></textarea>';
+
+		add_action( 'wp_footer', [ $this, 'front_end_inline_JS' ] );
 	}
 
 	public function front_end_inline_JS() {
+		$action = __CLASS__ . 'front_end_inline_JS';
+		if ( did_action( $action ) ) {
+			return;
+		}
+		do_action( $action );
 		?>
 		<script>
 			var ElementorFormWysiwyg = ElementorFormWysiwyg || {};
@@ -133,7 +140,6 @@ class Wysiwyg extends Field_Base {
 
 	public function __construct() {
 		parent::__construct();
-		add_action( 'wp_footer', [ $this, 'front_end_inline_JS' ] );
 		add_action( 'elementor/preview/init', [ $this, 'editor_inline_JS' ] );
 		wp_register_script( 'tinymce-cdn', '//cdnjs.cloudflare.com/ajax/libs/tinymce/4.8.5/tinymce.min.js', [], '4.8.5', true );
 	}

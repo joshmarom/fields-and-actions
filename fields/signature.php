@@ -46,13 +46,19 @@ class Signature extends Field_Base {
 			<?php echo __( 'Clear', 'e-signature' ); ?>
 		</button>
 		<?php
+		add_action( 'wp_footer', [ $this, 'front_end_inline_JS' ] );
 	}
 
 	public function front_end_inline_JS() {
+		$action = __CLASS__ . 'front_end_inline_JS';
+		if ( did_action( $action ) ) {
+			return;
+		}
+		do_action( $action );
 		?>
 		<script>
 			jQuery( document ).ready( function( $ ) {
-					$canvas = $( 'canvas.elementor-signature-field' );
+				$canvas = $( 'canvas.elementor-signature-field' );
 				$canvas.each( ( index, element ) => {
 					const uid = element.id,
 						$input = jQuery( 'input[for="' + uid + '"]' ),
@@ -79,7 +85,6 @@ class Signature extends Field_Base {
 
 	public function __construct() {
 		parent::__construct();
-		add_action( 'wp_footer', [ $this, 'front_end_inline_JS' ] );
 		wp_register_script( 'signature-pad','//cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js', [], '2.3.2', true );
 		wp_register_style( 'signature-pad', plugins_url( '/assets/signature_pad.css', __FILE__ ), [], '0.1' );
 	}
