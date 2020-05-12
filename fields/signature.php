@@ -42,7 +42,7 @@ class Signature extends Field_Base {
 		?>
 		<input <?php echo $form->get_render_attribute_string( 'input' . $item_index ) ?>>
 		<canvas <?php echo $form->get_render_attribute_string( 'canvas' . $item_index ) ?>></canvas>
-		<button <?php echo $form->get_render_attribute_string( 'clear-button' . $item_index ) ?> onclick="signaturePad.clear(); updateSignature(); document.getElementById('form-field-theSign').setAttribute('value', '' );">
+		<button <?php echo $form->get_render_attribute_string( 'clear-button' . $item_index ) ?>>
 			<?php echo __( 'Clear', 'e-signature' ); ?>
 		</button>
 		<?php
